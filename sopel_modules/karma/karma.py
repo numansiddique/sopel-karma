@@ -32,7 +32,7 @@ def promote_karma(bot, trigger):
     current_karma += 1
 
     bot.db.set_nick_value(trigger.group(1), 'karma', current_karma)
-    bot.say(trigger.group(1) + ' == ' + str(current_karma))
+    bot.say(trigger.group(1) + ' has ' + str(current_karma) + ' points of karma')
 
 
 @rate(10)
@@ -55,7 +55,7 @@ def demote_karma(bot, trigger):
     current_karma -= 1
 
     bot.db.set_nick_value(trigger.group(1), 'karma', current_karma)
-    bot.say(trigger.group(1) + ' == ' + str(current_karma))
+    bot.say(trigger.group(1) + ' has ' + str(current_karma) + ' points of karma')
 
 
 @rate(10)
@@ -70,7 +70,7 @@ def show_karma(bot, trigger):
     else:
         current_karma = int(current_karma)
 
-    bot.say(trigger.group(1) + ' == ' + str(current_karma))
+    bot.say(trigger.group(1) + ' has ' + str(current_karma) + ' points of karma')
 
 
 @commands('karma')
@@ -86,7 +86,7 @@ def karma(bot, trigger):
     karma = bot.db.get_nick_value(nick, 'karma')
     if not karma:
         karma = '0'
-    bot.say("%s == %s" % (nick, karma))
+    bot.say("%s has %s points of karma" % (nick, karma))
 
 
 @require_privilege(OP)
@@ -102,7 +102,7 @@ def set_karma(bot, trigger):
         value = int(trigger.group(2).strip().split()[1])
 
     bot.db.set_nick_value(nick, 'karma', value)
-    bot.say("%s == %s" % (nick, value))
+    bot.say("%s has %s points of karma" % (nick, value))
 
 
 @rate(10)
@@ -121,4 +121,4 @@ def top_karma(bot, trigger):
         WHERE key = 'karma' ORDER BY value DESC LIMIT ?"
     karmalist = bot.db.execute(query, str(top_limit)).fetchall()
     for user in karmalist:
-        bot.say("%s == %s" % (user[0], user[1]))
+        bot.say("%s has %s points of karma" % (user[0], user[1]))
