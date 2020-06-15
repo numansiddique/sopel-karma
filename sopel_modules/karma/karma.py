@@ -46,7 +46,7 @@ def demote_karma(bot, trigger):
         return bot.say('Say it to their face!')
     if (bot.db.get_nick_id(Identifier(trigger.group(1))) ==
             bot.db.get_nick_id(Identifier(trigger.nick))):
-        return bot.say('You may not reduce your own karma!')
+        bot.say('You are reducing your own karma! You did something terrible ?')
     current_karma = bot.db.get_nick_value(trigger.group(1), 'karma')
     if not current_karma:
         current_karma = 0
